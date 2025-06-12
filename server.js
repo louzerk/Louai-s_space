@@ -15,10 +15,11 @@ app.use(express.static(path.join(__dirname, '.')));
 
 // Database configuration
 const dbConfig = {
-    host: 'lcrossover.proxy.rlwy.net',
-    user: 'root', // Replace with your MySQL username
-    password: 'uPBeRFgNKjncgNzOvTrCJoFMkTsbLldy', // Replace with your MySQL password
-    database: 'railway'
+    host: process.env.MYSQLHOST || 'lcrossover.proxy.rlwy.net',
+    user: process.env.MYSQLUSER || 'root',
+    password: process.env.MYSQLPASSWORD || 'uPBeRFgNKjncgNzOvTrCJoFMkTsbLldy',
+    database: process.env.MYSQLDATABASE || 'railway',
+    port: process.env.MYSQLPORT || 3306
 };
 
 // Initialize database connection
