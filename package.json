@@ -1,27 +1,13 @@
 {
-  "name": "portfolio-website",
+  "name": "portfolio-app",
   "version": "1.0.0",
-  "description": "Portfolio website with visitor counter and comments",
-  "main": "backend/server.js",
   "scripts": {
-    "start": "node backend/server.js",
-    "dev": "nodemon backend/server.js",
-    "install-deps": "npm install"
+    "start": "node server.js"
   },
   "dependencies": {
+    "express": "^4.18.0",
+    "mysql2": "^3.6.0",
     "cors": "^2.8.5",
-    "express": "^4.21.2",
-    "mysql2": "^2.3.3"
-  },
-  "devDependencies": {
-    "nodemon": "^3.1.10"
-  },
-  "keywords": [
-    "portfolio",
-    "website",
-    "mysql",
-    "express"
-  ],
-  "author": "Your Name",
-  "license": "MIT"
+    "uuid": "^9.0.0"
+  }
 }
