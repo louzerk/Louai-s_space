@@ -2,14 +2,14 @@ document.addEventListener('DOMContentLoaded', function() {
     const darkModeToggle = document.getElementById('darkModeToggle');
     const body = document.body;
 
-
+    // Load dark mode preference
     const savedDarkMode = localStorage.getItem('darkMode');
     if (savedDarkMode === 'enabled') {
         body.classList.add('dark-mode');
         darkModeToggle.checked = true;
     }
 
-
+    // Dark mode toggle listener
     darkModeToggle.addEventListener('change', function() {
         if (this.checked) {
             body.classList.add('dark-mode');
@@ -19,10 +19,10 @@ document.addEventListener('DOMContentLoaded', function() {
             localStorage.setItem('darkMode', 'disabled');
         }
     });
-});
-// Frontend JavaScript for visitor counter and comments
 
-document.addEventListener('DOMContentLoaded', function() {
+    // Add improved comment styles
+    addImprovedCommentStyles();
+
     // Load visitor count on page load
     loadVisitorCount();
 
@@ -87,7 +87,7 @@ async function loadComments() {
     }
 }
 
-// Display comments in the DOM
+// Display comments in the DOM - IMPROVED VERSION
 function displayComments(comments) {
     const commentsSection = document.getElementById('comments_section');
     if (!commentsSection) return;
@@ -95,22 +95,40 @@ function displayComments(comments) {
     commentsSection.innerHTML = '';
 
     if (comments.length === 0) {
-        commentsSection.innerHTML = '<p style="color: #666; font-style: italic;">No comments yet. Be the first to leave a review!</p>';
+        commentsSection.innerHTML = `
+            <div class="no-comments">
+                <div class="no-comments-icon">💬</div>
+                <p>No reviews yet. Be the first to share your thoughts!</p>
+            </div>
+        `;
         return;
     }
 
-    comments.forEach(comment => {
+    comments.forEach((comment, index) => {
         const commentElement = document.createElement('div');
-        commentElement.className = 'comment-item';
+        commentElement.className = 'comment-card';
+        commentElement.style.animationDelay = `${index * 0.1}s`;
 
-        const date = new Date(comment.created_at).toLocaleDateString();
+        const date = new Date(comment.created_at).toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric'
+        });
+
+        // Get initials for avatar
+        const initials = comment.name.split(' ').map(word => word[0]).join('').substring(0, 2).toUpperCase();
 
         commentElement.innerHTML = `
             <div class="comment-header">
-                <strong class="comment-author">${escapeHtml(comment.name)}</strong>
-                <span class="comment-date">${date}</span>
+                <div class="comment-avatar">${initials}</div>
+                <div class="comment-info">
+                    <div class="comment-author">${escapeHtml(comment.name)}</div>
+                    <div class="comment-date">${date}</div>
+                </div>
             </div>
-            <div class="comment-text">${escapeHtml(comment.comment)}</div>
+            <div class="comment-content">
+                <div class="comment-text">${escapeHtml(comment.comment)}</div>
+            </div>
         `;
 
         commentsSection.appendChild(commentElement);
@@ -196,46 +214,199 @@ function escapeHtml(text) {
     return div.innerHTML;
 }
 
-// Optional: Add some CSS for comment styling
-function addCommentStyles() {
+// Enhanced CSS for better comment styling
+function addImprovedCommentStyles() {
     const style = document.createElement('style');
     style.textContent = `
-        .comment-item {
-            background: #f9f9f9;
-            border-left: 3px solid #007bff;
+        /* Comments container */
+        #comments_section {
+            max-height: 400px;
+            overflow-y: auto;
             padding: 15px;
-            margin-bottom: 15px;
-            border-radius: 5px;
+            scrollbar-width: thin;
+            scrollbar-color: #ccc transparent;
         }
-        
+
+        #comments_section::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        #comments_section::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        #comments_section::-webkit-scrollbar-thumb {
+            background: #ccc;
+            border-radius: 3px;
+        }
+
+        /* No comments state */
+        .no-comments {
+            text-align: center;
+            padding: 40px 20px;
+            color: #666;
+        }
+
+        .no-comments-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+            opacity: 0.5;
+        }
+
+        .no-comments p {
+            font-style: italic;
+            margin: 0;
+            font-size: 16px;
+        }
+
+        /* Comment cards */
+        .comment-card {
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 16px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            transition: all 0.3s ease;
+            animation: slideIn 0.5s ease forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .comment-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        .comment-card:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Comment header */
         .comment-header {
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            margin-bottom: 8px;
+            margin-bottom: 15px;
         }
-        
-        .comment-author {
-            color: #333;
+
+        .comment-avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
             font-size: 14px;
+            margin-right: 15px;
+            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
         }
-        
+
+        .comment-info {
+            flex: 1;
+        }
+
+        .comment-author {
+            font-weight: 600;
+            color: #2d3748;
+            font-size: 16px;
+            margin-bottom: 3px;
+        }
+
         .comment-date {
-            color: #666;
-            font-size: 12px;
+            color: #718096;
+            font-size: 13px;
+            font-weight: 400;
         }
-        
+
+        /* Comment content */
+        .comment-content {
+            padding-left: 0;
+        }
+
         .comment-text {
-            color: #555;
-            line-height: 1.4;
+            color: #4a5568;
+            line-height: 1.6;
+            font-size: 15px;
             white-space: pre-wrap;
+            word-wrap: break-word;
         }
-        
-        #total_visitors_button:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
+
+        /* Animation */
+        @keyframes slideIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Dark mode styles */
+        body.dark-mode .comment-card {
+            background: linear-gradient(135deg, #2d3748 0%, #1a202c 100%);
+            border-color: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        body.dark-mode .comment-card:hover {
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        body.dark-mode .comment-avatar {
+            background: linear-gradient(135deg, #FFB6B6 0%, #FF8A80 100%);
+            color: #1a202c;
+            box-shadow: 0 2px 8px rgba(255, 182, 182, 0.3);
+        }
+
+        body.dark-mode .comment-author {
+            color: #f7fafc;
+        }
+
+        body.dark-mode .comment-date {
+            color: #a0aec0;
+        }
+
+        body.dark-mode .comment-text {
+            color: #e2e8f0;
+        }
+
+        body.dark-mode .no-comments {
+            color: #a0aec0;
+        }
+
+        body.dark-mode #comments_section::-webkit-scrollbar-thumb {
+            background: #4a5568;
+        }
+
+        /* Mobile responsiveness */
+        @media screen and (max-width: 480px) {
+            .comment-card {
+                padding: 16px;
+                margin-bottom: 12px;
+                border-radius: 12px;
+            }
+
+            .comment-avatar {
+                width: 40px;
+                height: 40px;
+                font-size: 13px;
+                margin-right: 12px;
+            }
+
+            .comment-author {
+                font-size: 15px;
+            }
+
+            .comment-text {
+                font-size: 14px;
+            }
+
+            #comments_section {
+                max-height: 300px;
+                padding: 10px;
+            }
         }
     `;
     document.head.appendChild(style);
 }
-
