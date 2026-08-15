@@ -1,806 +1,444 @@
-* {
-    box-sizing: border-box;
+/* ===========================================================
+   TOKENS
+   =========================================================== */
+:root {
+    --bg: #F2F0EC;
+    --surface: #FFFFFF;
+    --ink: #2B2B2B;
+    --muted-ink: #5B5B5B;
+    --border: rgba(43, 43, 43, 0.08);
+
+    --accent: #C97A7A;        /* refined blush — original site's identity, dialed in */
+    --accent-soft: rgba(201, 122, 122, 0.12);
+    --secure: #4C6B63;        /* muted sage/teal — nod to the security specialization */
+    --secure-soft: rgba(76, 107, 99, 0.12);
+
+    --font-display: 'Crimson Text', serif;
+    --font-body: 'Inter', -apple-system, sans-serif;
+    --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+
+    --radius: 20px;
+    --shadow: 0 10px 30px rgba(43, 43, 43, 0.08);
+    --shadow-hover: 0 16px 40px rgba(43, 43, 43, 0.14);
+
+    --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
+
+body.dark-mode {
+    --bg: #17171A;
+    --surface: #232326;
+    --ink: #F2F0EC;
+    --muted-ink: #B8B5B0;
+    --border: rgba(242, 240, 236, 0.08);
+
+    --accent: #FFB6B6;
+    --accent-soft: rgba(255, 182, 182, 0.14);
+    --secure: #8FBBAF;
+    --secure-soft: rgba(143, 187, 175, 0.14);
+
+    --shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+    --shadow-hover: 0 16px 40px rgba(0, 0, 0, 0.5);
+}
+
+/* ===========================================================
+   BASE
+   =========================================================== */
+* { box-sizing: border-box; }
 
 body {
     margin: 0;
     padding: 0;
     min-height: 100vh;
-    font-size: 18px; /* Increased base font size */
-    line-height: 1.6; /* Better line height for readability */
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 17px;
+    line-height: 1.6;
+    transition: background var(--transition), color var(--transition);
 }
 
-.container {
-    width: 100%;
-    max-width: 1400px; /* Increased container width */
+img { max-width: 100%; height: auto; }
+
+.page {
+    max-width: 900px;
     margin: 0 auto;
-    padding: 0 20px; /* Increased padding */
+    padding: 40px 20px 80px;
 }
 
-table {
-    margin: 0 auto;
-}
-#louai_ouhassine_title {
-    margin-top: 60px; /* Increased margin */
-    color: #FFF4F4;
-    text-align: center;
-    text-shadow: 0 4px 4px #000000;
-    font-family: 'Source Serif Pro', serif;
-    font-size: 48px; /* Increased font size */
-    padding: 20px; /* Added padding */
-}
-
-#cs_student_title {
-    color: #FFFFFF;
-    text-align: center;
-    letter-spacing: 0.05em;
-    font-size: 24px; /* Increased font size */
-    padding: 15px; /* Added padding */
-}
-
-#main_div {
-    background-color: #555555;
-    margin: 0 auto 60px auto; /* Increased margins */
-    width: 100%;
-    max-width: 900px; /* Increased width */
-    height: auto;
-    min-height: 600px; /* Increased minimum height */
-    border-style: inherit;
-    border-width: 12px; /* Increased border */
-    border-radius: 35px; /* Increased border radius */
-    padding: 40px; /* Increased padding */
-}
-
-img {
-    max-width: 100%;
-    height: auto;
-}
-
-#profile_pic {
-    width: 100%;
-    max-width: 250px; /* Increased size */
-    height: auto;
-    aspect-ratio: 1/1;
-    border-radius: 50%;
-    margin-top: 2rem;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    border: 4px solid #fff; /* Added border for better visibility */
-}
-
-#about_me, #sports_i_enjoy, #instruments_i_play, #countries_i_traveled, #total_visitors {
-    margin: 0 auto 60px auto; /* Increased margins */
-    width: 100%;
-    max-width: 900px; /* Increased width */
-    border-radius: 35px; /* Increased border radius */
-    background-color: rgba(85, 85, 85, 0.4); /* Slightly more opaque */
-    height: auto;
-    padding: 40px; /* Increased padding */
-    border: 2px solid rgba(255, 255, 255, 0.1); /* Added subtle border */
-}
-
-#about_me {
-    min-height: 600px; /* Increased height */
-}
-
-#about_me_title {
-    color: #555555;
-    margin: 0 auto;
-    padding-top: 40px; /* Increased padding */
-    padding-bottom: 40px;
-    font-size: 42px; /* Increased font size */
-    font-family: 'Crimson Text', serif;
-    font-weight: 400;
-    line-height: normal;
-    letter-spacing: 0em;
-    text-align: center;
-    width: auto;
-}
-
-#about_me_text {
-    color: rgba(255, 255, 255, 0.9); /* Increased opacity */
-    margin: 0 3rem; /* Increased margins */
-    padding-bottom: 40px; /* Increased padding */
-    font-size: 20px; /* Increased font size */
-    line-height: 1.8; /* Better line spacing */
-}
-
-#sports_i_enjoy {
-    min-height: 400px; /* Increased height */
-}
-
-#sports_i_enjoy_title {
-    color: #555555;
-    margin: 0 auto;
-    padding-top: 40px; /* Increased padding */
-    padding-bottom: 40px;
-    font-size: 42px; /* Increased font size */
-    font-family: 'Crimson Text', serif;
-    font-weight: 400;
-    line-height: normal;
-    letter-spacing: 0em;
-    text-align: center;
-    width: auto;
-}
-
-#instruments_i_play {
-    min-height: 700px; /* Increased height */
-}
-
-#instruments_i_play_title {
-    color: #555555;
-    margin: 0 auto;
-    padding-top: 40px; /* Increased padding */
-    padding-bottom: 40px;
-    font-size: 42px; /* Increased font size */
-    font-family: 'Crimson Text', serif;
-    font-weight: 400;
-    line-height: normal;
-    letter-spacing: 0em;
-    text-align: center;
-    width: auto;
-}
-
-#listen_to_my_personal_playlist_title {
-    color: #555555;
-    margin: 0 auto;
-    padding-top: 40px; /* Increased padding */
-    padding-bottom: 20px; /* Reduced to bring iframe closer */
-    font-size: 42px; /* Increased font size */
-    font-family: 'Crimson Text', serif;
-    font-weight: 400;
-    line-height: normal;
-    letter-spacing: 0em;
-    text-align: center;
-    width: 100%;
-    max-width: 600px; /* Increased width */
-}
-
-iframe {
-    margin: 20px auto 40px auto; /* Adjusted margins */
-    width: 100%;
-    max-width: 700px; /* Increased width */
-    height: 400px; /* Increased height significantly */
-    display: block;
-    border-radius: 15px;
-    border: 3px solid #707070; /* Spotify green border */
-    box-shadow: 0 10px 30px #FFDDDD;
-    background: #191414; /* Spotify dark background as fallback */
-    position: relative;
-    z-index: 10;
-    transform: scale(1.05); /* Make it slightly larger */
-}
-
-iframe:hover {
-    transform: scale(1.08);
-    box-shadow: 0 15px 40px #FFDDDD;
-    border-color: #FFDDDD;
-}
-
-#countries_i_traveled {
-    min-height: 300px; /* Increased height */
-}
-
-#countries_i_travel_title {
-    color: #555555;
-    margin: 0 auto;
-    padding-bottom: 40px; /* Increased padding */
-    font-size: 42px; /* Increased font size */
-    font-family: 'Crimson Text', serif;
-    font-weight: 400;
-    line-height: normal;
-    letter-spacing: 0em;
-    text-align: center;
-    width: auto;
-    padding-top: 40px; /* Increased padding */
-}
-
-#buttons_sports_i_enjoy {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    gap: 2rem; /* Increased gap */
-    flex-wrap: wrap;
-    padding-bottom: 40px; /* Increased padding */
-}
-
-#tennis_button, #scuba_diving_button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 12px; /* Increased gap */
-    padding: 12px 24px; /* Increased padding */
-    border-radius: 35px; /* Increased border radius */
-    background-color: #EEEEEE;
-    border: 2px solid #55555555; /* Increased border */
-    font-family: "Crimson Text", serif;
-    font-size: 24px; /* Increased font size */
-    height: 55px; /* Increased height */
-    min-width: 180px; /* Added minimum width */
-}
-
-#piano_button, #guitar_button {
-    border-radius: 35px; /* Increased border radius */
-    background-color: #EEEEEE;
-    border: 2px solid #55555555; /* Increased border */
-    font-family: "Crimson Text", serif;
-    font-size: 24px; /* Increased font size */
-    height: 55px; /* Increased height */
-    width: 180px; /* Increased width */
-    margin: 15px; /* Increased margin */
-}
-
-#tennis_button_pic {
-    width: 28px; /* Increased size */
-    height: 28px;
-}
-
-#scuba_diving_button_pic {
-    width: 32px; /* Increased size */
-    height: 32px;
-}
-
-#countries_traveled_buttons {
-    margin: 0 auto;
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 3rem; /* Increased gap */
-    padding: 2rem 2rem 40px 2rem; /* Increased padding */
-    max-width: 800px; /* Increased width */
-}
-
-#spain_button, #tunisia_button, #france_button, #germany_button {
-    flex: 0 1 auto;
-    height: 65px; /* Increased height */
-    border: none;
-    background: none;
-    border-radius: 10px; /* Added border radius */
-    overflow: hidden; /* Added for better image display */
-}
-
-#spain_button_pic, #france_button_pic, #germany_button_pic, #tunisia_button_pic {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    border-radius: 8px; /* Added border radius */
-}
-
-#total_visitors {
-    min-height: 650px; /* Increased height */
-    margin-bottom: 120px; /* Increased bottom margin */
-}
-
-#total_visitors_title {
-    color: #555555;
-    margin: 0 auto;
-    padding-top: 40px; /* Increased padding */
-    font-family: 'Crimson Text', serif;
-    font-weight: 400;
-    line-height: normal;
-    letter-spacing: 0em;
-    width: auto;
-    font-size: 42px; /* Increased font size */
-    text-align: center;
-    padding-bottom: 40px; /* Increased padding */
-}
-
-#total_visitors_inside {
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-    gap: 3rem; /* Increased gap */
-    padding: 3rem; /* Increased padding */
-    flex-wrap: wrap;
-}
-
-#left_section {
-    flex: 1;
-    min-width: 350px; /* Increased width */
-    max-width: 400px; /* Increased width */
-}
-
-#leave_a_review {
-    text-align: left;
-    font-family: 'Crimson Text', serif;
-    font-weight: 400;
-    line-height: normal;
-    letter-spacing: 0em;
-    font-size: 24px; /* Increased font size */
-    margin-bottom: 35px; /* Increased margin */
-}
-
-#leave_review_pic {
-    width: 28px; /* Increased size */
-    height: 28px;
-}
-
-#total_visitors_input_name {
-    background-color: #FFFFFF;
-    border-radius: 12px; /* Increased border radius */
-    outline: none;
-    box-shadow: none;
-    border: 2px solid #ddd; /* Added visible border */
-    width: 100%;
-    height: 55px; /* Increased height */
-    font-size: 18px; /* Increased font size */
-    padding: 0 15px; /* Added padding */
-}
-
-#total_visitors_textarea_feedback {
-    margin-top: 20px; /* Increased margin */
-    border-radius: 12px; /* Increased border radius */
-    background-color: #FFFFFF;
-    color: rgba(85, 85, 85, 0.6); /* Increased opacity */
-    outline: none;
-    box-shadow: none;
-    border: 2px solid #ddd; /* Added visible border */
-    width: 100%;
-    height: 140px; /* Increased height */
-    margin-bottom: 20px; /* Increased margin */
-    font-size: 16px; /* Increased font size */
-    padding: 15px; /* Added padding */
-    resize: vertical; /* Allow vertical resize */
-}
-
-#total_visitors_button {
-    width: 100%;
-    height: 55px; /* Increased height */
-    border-radius: 35px; /* Increased border radius */
-    border: none; /* Removed border style */
-    background-color: rgba(34, 34, 34, 0.8); /* Increased opacity */
-    color: rgba(249, 255, 246, 0.9); /* Increased opacity */
-    font-size: 18px; /* Increased font size */
-    cursor: pointer; /* Added cursor pointer */
-    transition: background-color 0.3s; /* Added transition */
-}
-
-#total_visitors_button:hover {
-    background-color: rgba(34, 34, 34, 1); /* Hover effect */
-}
-
-#right_section {
-    flex: 1;
-    min-width: 350px; /* Increased width */
-    max-width: 400px; /* Increased width */
-}
-
-#comments_title {
-    margin: 0 auto 35px; /* Increased margin */
-    font-family: 'Crimson Text', serif;
-    font-weight: 400;
-    line-height: normal;
-    letter-spacing: 0em;
-    font-size: 24px; /* Increased font size */
-    text-align: center;
-}
-
-#comments_section {
-    background-color: #FFFFFF;
-    border-radius: 18px; /* Increased border radius */
-    width: 100%;
-    min-height: 280px; /* Increased height */
-    border: 2px solid #eee; /* Added border */
-    padding: 20px; /* Added padding */
-}
-
-/* Media Queries */
-@media screen and (max-width: 768px) {
-    #main_div, #about_me, #sports_i_enjoy, #instruments_i_play, #countries_i_traveled, #total_visitors {
-        width: 95%;
-        margin-bottom: 50px;
-        max-width: 95%;
-        padding: 30px; /* Increased padding for mobile */
-    }
-
-    #buttons_sports_i_enjoy {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    #tennis_button, #scuba_diving_button {
-        margin: 10px 0;
-        width: 100%;
-        max-width: 300px;
-    }
-
-    #about_me_title, #sports_i_enjoy_title, #instruments_i_play_title, #countries_i_travel_title {
-        font-size: 36px; /* Increased mobile font size */
-        padding: 2rem 1rem;
-    }
-
-    #listen_to_my_personal_playlist_title {
-        font-size: 36px; /* Increased mobile font size */
-        padding: 2rem 1rem 1rem 1rem;
-    }
-
-    iframe {
-        height: 320px;
-        max-width: 95%;
-        margin: 15px auto 30px auto;
-        transform: scale(1.02);
-    }
-
-    iframe:hover {
-        transform: scale(1.05);
-    }
-}
-
-@media screen and (max-width: 480px) {
-    #total_visitors_inside {
-        flex-direction: column;
-        align-items: center;
-        padding: 2rem 1rem; /* Adjusted padding */
-    }
-
-    #left_section, #right_section {
-        max-width: 100%;
-        min-width: 100%;
-        padding: 1rem;
-    }
-
-    #louai_ouhassine_title {
-        font-size: 36px; /* Increased mobile font size */
-    }
-
-    #about_me_title,
-    #sports_i_enjoy_title,
-    #instruments_i_play_title,
-    #listen_to_my_personal_playlist_title,
-    #countries_i_travel_title,
-    #total_visitors_title {
-        font-size: 30px; /* Increased mobile font size */
-        width: auto;
-        padding: 1.5rem;
-    }
-
-    #countries_traveled_buttons {
-        gap: 1.5rem; /* Increased mobile gap */
-    }
-
-    #about_me_text {
-        margin: 1rem;
-        font-size: 18px; /* Increased mobile font size */
-    }
-
-    #main_div, #about_me, #sports_i_enjoy, #instruments_i_play, #countries_i_traveled, #total_visitors {
-        margin-bottom: 40px;
-        padding: 25px; /* Increased mobile padding */
-    }
-
-    iframe {
-        height: 280px;
-        border-radius: 12px;
-        transform: scale(1);
-    }
-
-    iframe:hover {
-        transform: scale(1.02);
-    }
-}
-
-/* Dark Mode Toggle Styles */
+/* ===========================================================
+   DARK MODE TOGGLE
+   =========================================================== */
 .dark-mode-toggle {
     position: fixed;
     top: 20px;
     right: 20px;
-    z-index: 1000;
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    border-radius: 50px;
-    padding: 8px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    border: 2px solid rgba(255, 255, 255, 0.2);
+    z-index: 100;
 }
 
-.dark-mode-checkbox {
-    opacity: 0;
-    position: absolute;
-    pointer-events: none;
-}
+.dark-mode-checkbox { display: none; }
 
 .dark-mode-label {
-    background: linear-gradient(45deg, #87CEEB, #4169E1);
-    width: 70px;
-    height: 35px;
-    border-radius: 50px;
-    position: relative;
-    padding: 3px;
-    cursor: pointer;
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    transition: all 0.3s ease;
+    justify-content: space-between;
+    width: 64px;
+    height: 34px;
+    padding: 0 8px;
+    border-radius: 999px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    cursor: pointer;
+    position: relative;
+    transition: background var(--transition);
 }
 
-.sun-icon, .moon-icon {
-    font-size: 18px;
-    z-index: 1;
-    transition: all 0.3s ease;
-    width: 25px;
-    text-align: center;
-}
-
-.sun-icon {
-    margin-left: 5px;
-}
-
-.moon-icon {
-    margin-right: 5px;
-}
+.sun-icon, .moon-icon { font-size: 14px; z-index: 1; }
 
 .toggle-ball {
-    background-color: #fff;
-    width: 29px;
-    height: 29px;
     position: absolute;
-    left: 3px;
     top: 3px;
+    left: 3px;
+    width: 26px;
+    height: 26px;
     border-radius: 50%;
-    transition: transform 0.3s ease;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    background: var(--accent);
+    transition: transform var(--transition);
 }
 
-/* When dark mode is active */
-.dark-mode-checkbox:checked + .dark-mode-label {
-    background: linear-gradient(45deg, #000000, #FFB6B6);
+.dark-mode-checkbox:checked ~ .dark-mode-label .toggle-ball {
+    transform: translateX(30px);
 }
 
-.dark-mode-checkbox:checked + .dark-mode-label .toggle-ball {
-    transform: translateX(35px);
+/* ===========================================================
+   HERO
+   =========================================================== */
+.hero {
+    text-align: center;
+    padding: 60px 20px 50px;
 }
 
-/* Dark mode styles - exact specifications */
-body.dark-mode {
-    background: linear-gradient(135deg, #000000,#000000, #FFB6B6, #000000,#000000);
-    color: #ffffff;
-    transition: all 0.3s ease;
+#profile_pic {
+    width: 160px;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 4px solid var(--surface);
+    box-shadow: var(--shadow);
+    margin-bottom: 24px;
 }
 
-/* Main div - #2A2A2A with 33% opacity */
-body.dark-mode #main_div {
-    background-color: rgba(42, 42, 42, 0.33);
-    border-color: rgba(255, 255, 255, 0.1);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+#louai_ouhassine_title {
+    font-family: var(--font-display);
+    font-size: 44px;
+    font-weight: 700;
+    margin: 0 0 8px;
+    letter-spacing: 0.01em;
 }
 
-/* Main div titles - #FFDDDD 100% */
-body.dark-mode #louai_ouhassine_title,
-body.dark-mode #cs_student_title {
-    color: #FFDDDD;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+#cs_student_title {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--secure);
+    margin: 0 0 40px;
 }
 
-/* Other background divs - #2A2A2A 100% (full opacity) */
-body.dark-mode #about_me,
-body.dark-mode #sports_i_enjoy,
-body.dark-mode #instruments_i_play,
-body.dark-mode #countries_i_traveled,
-body.dark-mode #total_visitors {
-    background-color: #2A2A2A;
-    border-color: rgba(255, 255, 255, 0.1);
-    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.3);
+/* ===========================================================
+   TERMINAL — signature element
+   =========================================================== */
+.terminal {
+    max-width: 560px;
+    margin: 0 auto;
+    text-align: left;
+    background: #1B1B1E;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: var(--shadow-hover);
+    border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-/* Section titles - #FFFFFF 90% */
-body.dark-mode #about_me_title,
-body.dark-mode #sports_i_enjoy_title,
-body.dark-mode #instruments_i_play_title,
-body.dark-mode #listen_to_my_personal_playlist_title,
-body.dark-mode #countries_i_travel_title,
-body.dark-mode #total_visitors_title {
-    color: rgba(255, 255, 255, 0.9);
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+.terminal-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 16px;
+    background: #26262B;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 
-/* About me text */
-body.dark-mode #about_me_text {
-    color: rgba(255, 255, 255, 0.8);
+.dot { width: 11px; height: 11px; border-radius: 50%; }
+.dot-red { background: #FF5F57; }
+.dot-yellow { background: #FEBC2E; }
+.dot-green { background: #28C840; }
+
+.terminal-title {
+    margin-left: 8px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.4);
 }
 
-/* Buttons - background #333333, text #FFB6B6 */
-body.dark-mode #tennis_button,
-body.dark-mode #scuba_diving_button,
-body.dark-mode #piano_button,
-body.dark-mode #guitar_button {
-    background-color: #333333;
+.terminal-body {
+    padding: 22px 24px 26px;
+    font-family: var(--font-mono);
+    font-size: 14px;
+    line-height: 1.9;
+}
+
+.term-line { margin: 0; color: rgba(255, 255, 255, 0.55); }
+.prompt { color: #8FBBAF; margin-right: 8px; }
+
+.term-output {
+    margin: 0 0 14px;
+    color: #F2F0EC;
+    font-weight: 500;
+}
+
+.cursor {
+    display: inline-block;
     color: #FFB6B6;
-    border-color: #444444;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    animation: blink 1s step-end infinite;
+    margin-left: 4px;
 }
 
-body.dark-mode #tennis_button:hover,
-body.dark-mode #scuba_diving_button:hover,
-body.dark-mode #piano_button:hover,
-body.dark-mode #guitar_button:hover {
-    background-color: #404040;
+@keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+}
+
+/* ===========================================================
+   SECTIONS GRID
+   =========================================================== */
+.sections {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-top: 20px;
+}
+
+.card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 36px 30px;
+    transition: box-shadow var(--transition), transform var(--transition);
+}
+
+.card:hover {
+    box-shadow: var(--shadow-hover);
     transform: translateY(-2px);
 }
 
-/* Contact section - icons #F1F1F1, text #FFFFFF 40% */
-body.dark-mode #leave_a_review {
-    color: rgba(255, 255, 255, 0.4);
-}
+.card-wide { grid-column: 1 / -1; }
 
-body.dark-mode #comments_title {
-    color: rgba(255, 255, 255, 0.4);
-}
-
-/* Contact form inputs - background #333333, text #FFB6B6 */
-body.dark-mode #total_visitors_input_name,
-body.dark-mode #total_visitors_textarea_feedback {
-    background-color: #333333;
-    color: #FFB6B6;
-    border-color: #444444;
-}
-
-body.dark-mode #total_visitors_input_name::placeholder,
-body.dark-mode #total_visitors_textarea_feedback::placeholder {
-    color: rgba(255, 182, 182, 0.6);
-}
-
-body.dark-mode #total_visitors_button {
-    background-color: #333333;
-    color: #FFB6B6;
-}
-
-body.dark-mode #total_visitors_button:hover {
-    background-color: #404040;
-}
-
-body.dark-mode #comments_section {
-    background-color: #333333;
-    border-color: #444444;
-    color: #FFB6B6;
-}
-
-/* Make the review icon #F1F1F1 */
-body.dark-mode #leave_review_pic {
-    filter: brightness(0) saturate(100%) invert(95%) sepia(3%) saturate(13%) hue-rotate(202deg) brightness(105%) contrast(96%);
-}
-
-/* Dark mode iframe styling */
-body.dark-mode iframe {
-    border: 3px solid #010201;
-    box-shadow: 0 10px 30px #FFB6B6;
-    filter: brightness(1.1) contrast(1.2);
-}
-
-body.dark-mode iframe:hover {
-    box-shadow: 0 15px 40px #FFB6B6;
-    transform: scale(1.08);
-}
-
-/* Mobile-specific styles for the toggle */
-@media screen and (max-width: 768px) {
-    .dark-mode-toggle {
-        top: 15px;
-        right: 15px;
-        padding: 6px;
-    }
-
-    .dark-mode-label {
-        width: 60px;
-        height: 30px;
-    }
-
-    .toggle-ball {
-        width: 24px;
-        height: 24px;
-    }
-
-    .dark-mode-checkbox:checked + .dark-mode-label .toggle-ball {
-        transform: translateX(30px);
-    }
-
-    .sun-icon, .moon-icon {
-        font-size: 16px;
-        width: 20px;
-    }
-}
-
-@media screen and (max-width: 480px) {
-    .dark-mode-toggle {
-        top: 10px;
-        right: 10px;
-        padding: 5px;
-    }
-
-    .dark-mode-label {
-        width: 55px;
-        height: 28px;
-    }
-    .toggle-ball {
-        width: 22px;
-        height: 22px;
-    }
-
-    .dark-mode-checkbox:checked + .dark-mode-label .toggle-ball {
-        transform: translateX(27px);
-    }
-}
-/* Contact Section */
-#Contact_div {
-    margin: 0 auto 60px auto;
-    width: 100%;
-    max-width: 900px;
-    border-radius: 35px;
-    background-color: rgba(85, 85, 85, 0.4);
-    height: auto;
-    padding: 40px;
-    border: 2px solid rgba(255, 255, 255, 0.1);
+.card h4 {
+    font-family: var(--font-display);
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--ink);
+    margin: 0 0 22px;
     text-align: center;
 }
 
-#Contact {
-    color: #555555;
-    margin: 0 auto 40px auto;
-    font-size: 42px;
-    font-family: 'Crimson Text', serif;
-    font-weight: 400;
+#about_me_text {
+    color: var(--muted-ink);
+    font-size: 16px;
+    line-height: 1.85;
+    margin: 0;
 }
 
+/* ===========================================================
+   BUTTON GROUPS (sports / instruments / countries)
+   =========================================================== */
+#buttons_sports_i_enjoy,
+#instrument_buttons,
+#countries_traveled_buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 14px;
+}
+
+button {
+    font-family: var(--font-body);
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--ink);
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 12px 20px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all var(--transition);
+}
+
+button:hover {
+    border-color: var(--accent);
+    background: var(--accent-soft);
+    transform: translateY(-1px);
+}
+
+#tennis_button_pic, #scuba_diving_button_pic {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+}
+
+#countries_traveled_buttons button {
+    padding: 10px;
+    border-radius: 50%;
+    width: 52px;
+    height: 52px;
+    justify-content: center;
+}
+
+#countries_traveled_buttons img {
+    width: 26px;
+    height: 26px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+#listen_to_my_personal_playlist_title {
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 600;
+    margin: 30px 0 14px;
+    text-align: center;
+}
+
+iframe {
+    width: 100%;
+    border-radius: 12px;
+    border: none;
+}
+
+/* ===========================================================
+   CONTACT
+   =========================================================== */
 .contact-row {
     display: flex;
-    justify-content: center;
     flex-wrap: wrap;
-    gap: 30px;
-    margin: 0 auto;
-    max-width: 800px;
+    justify-content: center;
+    gap: 14px;
 }
 
 .contact-item {
     display: flex;
-    flex-direction: column;
     align-items: center;
-    width: 100px;
+    gap: 10px;
+    padding: 10px 16px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
     text-decoration: none;
-    transition: transform 0.3s ease;
+    color: var(--ink);
+    font-size: 14px;
+    font-weight: 500;
+    transition: all var(--transition);
 }
 
 .contact-item:hover {
-    transform: translateY(-5px);
+    border-color: var(--secure);
+    background: var(--secure-soft);
 }
 
-.contact-icon {
-    width: 50px;
-    height: 50px;
-    margin-bottom: 10px;
-    object-fit: contain;
+.contact-icon { width: 20px; height: 20px; }
+.dark-mode-icon { display: none; }
+body.dark-mode .light-mode-icon { display: none; }
+body.dark-mode .dark-mode-icon { display: block; }
+
+/* ===========================================================
+   VISITORS / REVIEWS
+   =========================================================== */
+#total_visitors_title {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--secure);
+    text-align: center;
+    margin: 0 0 26px;
 }
 
-.contact-label {
-    font-family: 'Crimson Text', serif;
-    font-size: 18px;
-    color: #FFFFFF;
+#total_visitors_inside {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
 }
 
-/* Dark Mode Styles */
-body.dark-mode #Contact {
-    color: rgba(255, 255, 255, 0.9);
+#left_section h2, #right_section h2 {
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0 0 16px;
 }
 
-body.dark-mode #Contact_div {
-    background-color: #2A2A2A;
+#leave_review_pic { width: 22px; height: 22px; }
+
+#total_visitors_input_name,
+#total_visitors_textarea_feedback {
+    width: 100%;
+    font-family: var(--font-body);
+    font-size: 14px;
+    padding: 12px 14px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: var(--bg);
+    color: var(--ink);
+    margin-bottom: 12px;
+    resize: vertical;
 }
 
-body.dark-mode .contact-label {
-    color: rgba(255, 255, 255, 0.9);
+#total_visitors_textarea_feedback { min-height: 90px; }
+
+#total_visitors_button {
+    width: 100%;
+    justify-content: center;
+    background: var(--secure);
+    color: #fff;
+    border: none;
 }
 
-/* Image switching for dark mode */
-.contact-icon.light-mode-icon {
-    display: block;
-}
-.contact-icon.dark-mode-icon {
-    display: none;
+#total_visitors_button:hover {
+    background: var(--accent);
+    transform: none;
 }
 
-body.dark-mode .contact-icon.light-mode-icon {
-    display: none;
+#total_visitors_button:disabled { opacity: 0.6; cursor: not-allowed; }
+
+/* ===========================================================
+   FOOTER
+   =========================================================== */
+.site-footer {
+    text-align: center;
+    margin-top: 50px;
 }
-body.dark-mode .contact-icon.dark-mode-icon {
-    display: block;
+
+.term-footer {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--muted-ink);
+}
+
+.footer-note { color: rgba(91, 91, 91, 0.5); }
+
+/* ===========================================================
+   RESPONSIVE
+   =========================================================== */
+@media screen and (max-width: 720px) {
+    .sections { grid-template-columns: 1fr; }
+    #total_visitors_inside { grid-template-columns: 1fr; }
+    #louai_ouhassine_title { font-size: 34px; }
+    .card { padding: 28px 22px; }
+    .terminal-body { font-size: 13px; }
 }

@@ -1,25 +1,59 @@
+require('dotenv').config();
 const express = require('express');
 const mysql = require('mysql2/promise');
 const path = require('path');
 const cors = require('cors');
+const helmet = require('helmet');
+const rateLimit = require('express-rate-limit');
 const { v4: uuidv4 } = require('uuid');
 
 const app = express();
 const PORT = process.env.PORT || 25726;
 
+// --- Security headers ---
+app.use(helmet({
+    contentSecurityPolicy: false // relaxed here since we embed a Spotify iframe; tighten if you drop the embed
+}));
+
+// --- Rate limiting: protects /api/* from spam / abuse ---
+const apiLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 100,
+    standardHeaders: true,
+    legacyHeaders: false,
+    message: { error: 'Too many requests, please try again later.' }
+});
+app.use('/api/', apiLimiter);
+
+const commentLimiter = rateLimit({
+    windowMs: 60 * 60 * 1000, // 1 hour
+    max: 5,
+    standardHeaders: true,
+    legacyHeaders: false,
+    message: { error: 'Too many comments submitted. Try again later.' }
+});
+
 // Middleware
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json({ limit: '10kb' }));
+app.use(express.urlencoded({ extended: true, limit: '10kb' }));
 app.use(cors());
 app.use(express.static(path.join(__dirname, '.')));
 
-// Database configuration
+// --- Database configuration — pulled from environment, never hardcoded ---
+const requiredEnvVars = ['DB_HOST', 'DB_USER', 'DB_PASSWORD', 'DB_NAME'];
+for (const key of requiredEnvVars) {
+    if (!process.env[key]) {
+        console.error(`Missing required environment variable: ${key}`);
+        process.exit(1);
+    }
+}
+
 const dbConfig = {
-    host: 'crossover.proxy.rlwy.net',  // CORRECT - removed the 'l'
-    user: 'root',
-    password: 'uPBeRFgNKjncgNzOvTrCJoFMkTsbLldy',
-    database: 'railway',
-    port: 25726  // Add the port number
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
+    port: process.env.DB_PORT || 3306
 };
 
 // Initialize database connection
@@ -29,7 +63,6 @@ async function initializeDatabase() {
         db = await mysql.createConnection(dbConfig);
         console.log('Connected to MySQL database');
 
-        // Create tables if they don't exist
         await db.execute(`
             CREATE TABLE IF NOT EXISTS visitor_counter (
                 id INT AUTO_INCREMENT PRIMARY KEY,
@@ -56,7 +89,6 @@ async function initializeDatabase() {
             )
         `);
 
-        // Initialize visitor counter if empty
         const [rows] = await db.execute('SELECT COUNT(*) as count FROM visitor_counter');
         if (rows[0].count === 0) {
             await db.execute('INSERT INTO visitor_counter (total_visitors) VALUES (0)');
@@ -67,18 +99,20 @@ async function initializeDatabase() {
     }
 }
 
-// Helper function to get client IP
+// Helper: get client IP (trust proxy must be set if behind a load balancer)
 function getClientIp(req) {
     return req.ip ||
-        req.headers['x-forwarded-for'] ||
-        req.connection.remoteAddress ||
-        req.socket.remoteAddress ||
-        req.connection.socket.remoteAddress;
+        req.headers['x-forwarded-for']?.split(',')[0].trim() ||
+        req.socket.remoteAddress;
 }
 
-// Routes
+// Basic sanitization: strip anything that looks like HTML tags before it ever reaches storage
+function stripTags(input) {
+    return input.replace(/<[^>]*>/g, '').trim();
+}
 
-// Get visitor count
+// --- Routes ---
+
 app.get('/api/visitors/count', async (req, res) => {
     try {
         const [rows] = await db.execute('SELECT total_visitors FROM visitor_counter LIMIT 1');
@@ -89,32 +123,24 @@ app.get('/api/visitors/count', async (req, res) => {
     }
 });
 
-// Increment visitor count (IP-based)
 app.post('/api/visitors/increment', async (req, res) => {
     const clientIp = getClientIp(req);
-    const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
+    const today = new Date().toISOString().split('T')[0];
 
     try {
-        // Check if this IP has visited today
         const [existing] = await db.execute(
             'SELECT id FROM visitor_ips WHERE ip_address = ? AND visit_date = ?',
             [clientIp, today]
         );
 
         if (existing.length === 0) {
-            // New visit - increment counter and record IP
             await db.beginTransaction();
-
             try {
-                await db.execute(
-                    'UPDATE visitor_counter SET total_visitors = total_visitors + 1'
-                );
-
+                await db.execute('UPDATE visitor_counter SET total_visitors = total_visitors + 1');
                 await db.execute(
                     'INSERT INTO visitor_ips (id, ip_address, visit_date) VALUES (?, ?, ?)',
                     [uuidv4(), clientIp, today]
                 );
-
                 await db.commit();
             } catch (transactionError) {
                 await db.rollback();
@@ -122,7 +148,6 @@ app.post('/api/visitors/increment', async (req, res) => {
             }
         }
 
-        // Get updated count
         const [rows] = await db.execute('SELECT total_visitors FROM visitor_counter LIMIT 1');
         res.json({ count: rows[0].total_visitors });
     } catch (error) {
@@ -131,22 +156,16 @@ app.post('/api/visitors/increment', async (req, res) => {
     }
 });
 
-// Get all approved comments
 app.get('/api/comments', async (req, res) => {
     try {
         const [rows] = await db.execute(
             'SELECT name, comment, created_at FROM visitor_comments WHERE is_approved = TRUE ORDER BY created_at DESC'
         );
 
-        // Format dates nicely
         const comments = rows.map(comment => ({
             ...comment,
             created_at: new Date(comment.created_at).toLocaleString('en-US', {
-                year: 'numeric',
-                month: 'short',
-                day: 'numeric',
-                hour: '2-digit',
-                minute: '2-digit'
+                year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit'
             })
         }));
 
@@ -157,25 +176,32 @@ app.get('/api/comments', async (req, res) => {
     }
 });
 
-// Add new comment
-app.post('/api/comments', async (req, res) => {
-    const { name, comment } = req.body;
+app.post('/api/comments', commentLimiter, async (req, res) => {
+    let { name, comment } = req.body;
+
+    if (typeof name !== 'string' || typeof comment !== 'string') {
+        return res.status(400).json({ error: 'Name and comment are required' });
+    }
+
+    name = stripTags(name);
+    comment = stripTags(comment);
 
     if (!name || !comment) {
         return res.status(400).json({ error: 'Name and comment are required' });
     }
-
     if (name.length > 100) {
         return res.status(400).json({ error: 'Name must be less than 100 characters' });
+    }
+    if (comment.length > 1000) {
+        return res.status(400).json({ error: 'Comment must be less than 1000 characters' });
     }
 
     try {
         await db.execute(
             'INSERT INTO visitor_comments (name, comment, is_approved) VALUES (?, ?, TRUE)',
-            [name.trim(), comment.trim()]
+            [name, comment]
         );
 
-        // Return the newly created comment with formatted date
         const [result] = await db.execute(
             'SELECT name, comment, created_at FROM visitor_comments WHERE id = LAST_INSERT_ID()'
         );
@@ -184,11 +210,7 @@ app.post('/api/comments', async (req, res) => {
             const newComment = {
                 ...result[0],
                 created_at: new Date(result[0].created_at).toLocaleString('en-US', {
-                    year: 'numeric',
-                    month: 'short',
-                    day: 'numeric',
-                    hour: '2-digit',
-                    minute: '2-digit'
+                    year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit'
                 })
             };
             res.json(newComment);
@@ -201,18 +223,15 @@ app.post('/api/comments', async (req, res) => {
     }
 });
 
-// Serve the main HTML file
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-// Error handling middleware
 app.use((err, req, res, next) => {
     console.error('Server error:', err);
     res.status(500).json({ error: 'Internal server error' });
 });
 
-// Start server
 app.listen(PORT, async () => {
     try {
         await initializeDatabase();
@@ -223,7 +242,6 @@ app.listen(PORT, async () => {
     }
 });
 
-// Graceful shutdown
 process.on('SIGINT', async () => {
     if (db) {
         await db.end();

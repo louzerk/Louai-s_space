@@ -2,13 +2,17 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Louai Ouhassine — Information Security Engineering student, USTO-MB.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:wght@400;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css.css">
-    <script src="script.js"></script>
-
+    <script src="script.js" defer></script>
     <title>Louai's space</title>
-
 </head>
 <body>
+
 <div class="dark-mode-toggle">
     <input type="checkbox" class="dark-mode-checkbox" id="darkModeToggle">
     <label for="darkModeToggle" class="dark-mode-label">
@@ -17,137 +21,144 @@
         <span class="toggle-ball"></span>
     </label>
 </div>
-<table>
-    <tr>
-            <th>
-                <div>
-                </div>
-            </th>
-            <th id="th_center">
-                <div id="main_div">
-                    <img src="images/main_div/Pic_Profile.jpg" alt="Profile Picture" id="profile_pic">
-                    <h1 id="louai_ouhassine_title">Louai OUHASSINE</h1>
-                    <h4 id="cs_student_title">Computer Science Student</h4>
-                </div>
-                <div id="about_me">
-                    <h4 id="about_me_title">About Me</h4>
-                    <p id="about_me_text">
-                        I am Louai Ouhassine, a 20-year-old Computer Science student at USTO-MB University, specializing in Information Security Engineering. My interests span both technology and the arts. I'm passionate about sports, especially tennis and gym training, and I enjoy playing music—particularly the piano and flamenco-style guitar.
-                        In the field of programming, I have experience with C, Java (Swing and JavaFX for GUI development), and web development. I am also skilled in working with SQL and relational databases.
-                        I completed an external internship at CHU d'Oran in the dermatology department, where I focused on modeling and managing a pharmaceutical database using the MERISE methodology.
-                        I hold certifications in Python programming from Cisco and web development from InSim School. I'm fluent in French and English, and Arabic is my native language.
-                    </p>
-                </div>
-                <div id="sports_i_enjoy">
-                    <h4 id="sports_i_enjoy_title">Sports I enjoy</h4>
-                    <div id="buttons_sports_i_enjoy">
-                        <button id="tennis_button">
-                            <img src="images/buttons_pic/tennis.png" id="tennis_button_pic">Tennis</button>
-                        <button id="scuba_diving_button">
-                            <img src="images/buttons_pic/scuba_diving.png" id="scuba_diving_button_pic">
-                            Scuba diving
-                        </button>
+
+<div class="page">
+
+    <header class="hero" id="main_div">
+        <img src="images/main_div/Pic_Profile.jpg" alt="Profile Picture" id="profile_pic">
+        <h1 id="louai_ouhassine_title">Louai OUHASSINE</h1>
+        <h4 id="cs_student_title">Information Security Engineering Student</h4>
+
+        <div class="terminal" role="img" aria-label="Terminal window displaying: whoami louai_ouhassine, role Information Security Engineering student at USTO-MB, interests tennis, gym, piano, flamenco guitar">
+            <div class="terminal-bar">
+                <span class="dot dot-red"></span>
+                <span class="dot dot-yellow"></span>
+                <span class="dot dot-green"></span>
+                <span class="terminal-title">louai@uosto-mb:~</span>
+            </div>
+            <div class="terminal-body">
+                <p class="term-line"><span class="prompt">$</span> whoami</p>
+                <p class="term-output">louai_ouhassine</p>
+                <p class="term-line"><span class="prompt">$</span> cat specialization.txt</p>
+                <p class="term-output">Information Security Engineering — USTO-MB</p>
+                <p class="term-line"><span class="prompt">$</span> ./interests --list</p>
+                <p class="term-output">tennis · gym · piano · flamenco guitar<span class="cursor">▌</span></p>
+            </div>
+        </div>
+    </header>
+
+    <main class="sections">
+
+        <section id="about_me" class="card card-wide">
+            <h4 id="about_me_title">About Me</h4>
+            <p id="about_me_text">
+                I am Louai Ouhassine, a 20-year-old Computer Science student at USTO-MB University, specializing in Information Security Engineering. My interests span both technology and the arts. I'm passionate about sports, especially tennis and gym training, and I enjoy playing music—particularly the piano and flamenco-style guitar.
+                In the field of programming, I have experience with C, Java (Swing and JavaFX for GUI development), and web development. I am also skilled in working with SQL and relational databases.
+                I completed an external internship at CHU d'Oran in the dermatology department, where I focused on modeling and managing a pharmaceutical database using the MERISE methodology.
+                I hold certifications in Python programming from Cisco and web development from InSim School. I'm fluent in French and English, and Arabic is my native language.
+            </p>
+        </section>
+
+        <section id="sports_i_enjoy" class="card">
+            <h4 id="sports_i_enjoy_title">Sports I enjoy</h4>
+            <div id="buttons_sports_i_enjoy">
+                <button id="tennis_button">
+                    <img src="images/buttons_pic/tennis.png" id="tennis_button_pic" alt="">Tennis
+                </button>
+                <button id="scuba_diving_button">
+                    <img src="images/buttons_pic/scuba_diving.png" id="scuba_diving_button_pic" alt="">
+                    Scuba diving
+                </button>
+            </div>
+        </section>
+
+        <section id="instruments_i_play" class="card">
+            <h4 id="instruments_i_play_title">Instruments I play</h4>
+            <div id="instrument_buttons">
+                <button id="piano_button">🎹 Piano</button>
+                <button id="guitar_button">🎸 Guitar</button>
+            </div>
+            <h4 id="listen_to_my_personal_playlist_title">My playlist</h4>
+            <iframe
+                    style="border-radius:12px"
+                    src="https://open.spotify.com/embed/playlist/6acT8lc3mOJBJfOcq8geSY?utm_source=generator&theme=0"
+                    width="100%"
+                    height="352"
+                    frameBorder="0"
+                    allowfullscreen=""
+                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                    loading="lazy">
+            </iframe>
+        </section>
+
+        <section id="countries_i_traveled" class="card">
+            <h4 id="countries_i_travel_title">Countries I Traveled</h4>
+            <div id="countries_traveled_buttons">
+                <button id="france_button"><img id="france_button_pic" src="images/drapeau/france-flag.webp" alt="France"></button>
+                <button id="spain_button"><img id="spain_button_pic" src="images/drapeau/spain-flag.webp" alt="Spain"></button>
+                <button id="germany_button"><img id="germany_button_pic" src="images/drapeau/germany-flag.webp" alt="Germany"></button>
+                <button id="tunisia_button"><img id="tunisia_button_pic" src="images/drapeau/tunisia-flag.webp" alt="Tunisia"></button>
+            </div>
+        </section>
+
+        <section id="Contact_div" class="card">
+            <h4 id="Contact">Contact</h4>
+            <div class="contact-row">
+                <a href="https://www.instagram.com/ouhassinelouai/" class="contact-item" target="_blank" rel="noopener noreferrer">
+                    <img src="images/contact/instgram_lightmode.png" class="contact-icon light-mode-icon" alt="Instagram">
+                    <img src="images/contact/instagram_darkmode.png" class="contact-icon dark-mode-icon" alt="Instagram">
+                    <span class="contact-label">Instagram</span>
+                </a>
+                <a href="https://discordapp.com/users/Louzerk#6753" class="contact-item" target="_blank" rel="noopener noreferrer">
+                    <img src="images/contact/discord_lightmode.png" class="contact-icon light-mode-icon" alt="Discord">
+                    <img src="images/contact/discord_darkmode.png" class="contact-icon dark-mode-icon" alt="Discord">
+                    <span class="contact-label">Discord</span>
+                </a>
+                <a href="https://www.facebook.com/ouhssine.louaye/" class="contact-item" target="_blank" rel="noopener noreferrer">
+                    <img src="images/contact/facebook_lightmode.png" class="contact-icon light-mode-icon" alt="Facebook">
+                    <img src="images/contact/facebook_darkmode.png" class="contact-icon dark-mode-icon" alt="Facebook">
+                    <span class="contact-label">Facebook</span>
+                </a>
+                <a href="https://snapchat.com/add/louaye39" class="contact-item" target="_blank" rel="noopener noreferrer">
+                    <img src="images/contact/snapchat_lightmode.png" class="contact-icon light-mode-icon" alt="Snapchat">
+                    <img src="images/contact/snapchat_darkmode.png" class="contact-icon dark-mode-icon" alt="Snapchat">
+                    <span class="contact-label">Snapchat</span>
+                </a>
+                <a href="mailto:ouhssinelouaye@gmail.com" class="contact-item">
+                    <img src="images/contact/gmail_lightmode.png" class="contact-icon light-mode-icon" alt="Gmail">
+                    <img src="images/contact/gmail_darkmode.png" class="contact-icon dark-mode-icon" alt="Gmail">
+                    <span class="contact-label">Gmail</span>
+                </a>
+            </div>
+        </section>
+
+        <section id="total_visitors" class="card card-wide">
+            <h4 id="total_visitors_title">Total Visitors : X</h4>
+            <div id="total_visitors_inside">
+                <section id="left_section">
+                    <h2 id="leave_a_review">
+                        <img id="leave_review_pic" src="images/total_visitors_pic/img.png" alt="">
+                        Leave a Review
+                    </h2>
+                    <input id="total_visitors_input_name" type="text" name="Your Name" placeholder="Your name">
+                    <textarea id="total_visitors_textarea_feedback" placeholder="Write your feedback"></textarea>
+                    <button id="total_visitors_button">Submit Review</button>
+                </section>
+                <section id="right_section">
+                    <h2 id="comments_title">Comments</h2>
+                    <div id="comments_section">
+                        <!-- Comments will be inserted here by JS -->
                     </div>
-                </div>
-                <div id="instruments_i_play">
-                    <h4 id="instruments_i_play_title">Instruments I play</h4>
-                        <button id="piano_button">
-                            🎹 Piano
-                        </button>
-                        <button id="guitar_button">
-                            🎸 Guitar
-                        </button>
-                    <h4 id="listen_to_my_personal_playlist_title">Listen to my personal playlist</h4>
-                    <iframe
-                            style="border-radius:12px"
-                            src="https://open.spotify.com/embed/playlist/6acT8lc3mOJBJfOcq8geSY?utm_source=generator&theme=0"
-                            width="100%"
-                            height="352"
-                            frameBorder="0"
-                            allowfullscreen=""
-                            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-                            loading="lazy">
-                    </iframe>
-                </div>
-                <div id="countries_i_traveled">
-                    <h4 id="countries_i_travel_title">Countries I Traveled</h4>
-                    <div id="countries_traveled_buttons">
-                        <button id="france_button">
-                            <img  id="france_button_pic" src="images/drapeau/france-flag.webp">
-                        </button>
-                        <button id="spain_button">
-                            <img id="spain_button_pic" src="images/drapeau/spain-flag.webp">
-                        </button>
-                        <button id="germany_button">
-                            <img id="germany_button_pic" src="images/drapeau/germany-flag.webp">
-                        </button>
-                        <button id="tunisia_button">
-                            <img id="tunisia_button_pic" src="images/drapeau/tunisia-flag.webp">
-                        </button>
-                    </div>
-                </div>
-                <div id="Contact_div">
-                    <h4 id="Contact">Contact</h4>
-                    <div class="contact-row">
-                        <a href="https://www.instagram.com/ouhassinelouai/" class="contact-item" target="_blank">
-                            <img src="images/contact/instgram_lightmode.png" class="contact-icon light-mode-icon" alt="Instagram">
-                            <img src="images/contact/instagram_darkmode.png" class="contact-icon dark-mode-icon" alt="Instagram">
-                            <span class="contact-label">Instagram</span>
-                        </a>
+                </section>
+            </div>
+        </section>
 
-                        <a href="https://discordapp.com/users/Louzerk#6753" class="contact-item" target="_blank">
-                            <img src="images/contact/discord_lightmode.png" class="contact-icon light-mode-icon" alt="Discord">
-                            <img src="images/contact/discord_darkmode.png" class="contact-icon dark-mode-icon" alt="Discord">
-                            <span class="contact-label">Discord</span>
-                        </a>
+    </main>
 
-                        <a href="https://www.facebook.com/ouhssine.louaye/" class="contact-item" target="_blank">
-                            <img src="images/contact/facebook_lightmode.png" class="contact-icon light-mode-icon" alt="Facebook">
-                            <img src="images/contact/facebook_darkmode.png" class="contact-icon dark-mode-icon" alt="Facebook">
-                            <span class="contact-label">Facebook</span>
-                        </a>
+    <footer class="site-footer">
+        <p class="term-footer"><span class="prompt">$</span> exit <span class="footer-note">// thanks for stopping by</span></p>
+    </footer>
 
-                        <a href="https://snapchat.com/add/louaye39" class="contact-item" target="_blank">
-                            <img src="images/contact/snapchat_lightmode.png" class="contact-icon light-mode-icon" alt="Snapchat">
-                            <img src="images/contact/snapchat_darkmode.png" class="contact-icon dark-mode-icon" alt="Snapchat">
-                            <span class="contact-label">Snapchat</span>
-                        </a>
-
-                        <a href="mailto:ouhssinelouaye@gmail.com" class="contact-item">
-                            <img src="images/contact/gmail_lightmode.png" class="contact-icon light-mode-icon" alt="Gmail">
-                            <img src="images/contact/gmail_darkmode.png" class="contact-icon dark-mode-icon" alt="Gmail">
-                            <span class="contact-label">Gmail</span>
-                        </a>
-
-                      
-                    </div>
-                </div>
-                <div id="total_visitors">
-                    <h4 id="total_visitors_title">Total Visitors : X</h4>
-                    <div id="total_visitors_inside">
-                        <section id="left_section">
-                            <h2 id="leave_a_review">
-                                <img id="leave_review_pic" src="images/total_visitors_pic/img.png">
-                                Leave a Review
-                            </h2>
-                            <input id="total_visitors_input_name" type="text" name="Your Name" placeholder="  Your name" ></input>
-                            <textarea id="total_visitors_textarea_feedback" placeholder=" Write your feedback"></textarea>
-                            <button id="total_visitors_button">Submit Review</button>
-                        </section>
-                        <section id="right_section">
-                            <h2 id="comments_title">Comments</h2>
-                            <div id="comments_section">
-                                <!-- Comments will be inserted here by JS -->
-                            </div>
-                        </section>
-                    </div>
-                </div>
-            </th>
-            <th>
-                <div>
-                </div>
-            </th>
-        </tr>
-    </table>
+</div>
 </body>
 </html>
